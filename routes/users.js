@@ -34,9 +34,20 @@ router.post('/create', function(req, res, next) {
   });
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res, next) {
+//we will simplyfy the route by
+//adding an options object to passport.authenticate containg a failureRedirect url
+// and a successRedirect url and failureFlash
+//to use failureFlash we need to install a flash module (i.e : connect flash)
+/*router.post('/login', passport.authenticate('local', function(req, res, next) {
   res.redirect('/orders');
-});
+});*/
+
+router.post('/login', 
+  passport.authenticate('local', {
+    failureRedirect: '/', 
+    successRedirect: '/orders',
+    failureFlash: 'Invalid credentials'//if set to 'true' passport will choose the error msg depending on the reason
+  }));
 
 router.get('/logout', function(req, res, next) {
   req.logout();
