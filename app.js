@@ -14,8 +14,9 @@ var users = require('./routes/users');
 var orders = require('./routes/orders');
 
 var passportConfig = require('./auth/passport-config');
-
+var restrict = require('./auth/restrict');
 passportConfig();
+
 
 mongoose.connect(config.mongoUri);
 
@@ -29,23 +30,25 @@ app.set('view engine', 'hbs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(expressSession(
-    {
-      secret: 'myAppSecret',
-      saveUninitialized: false,
-      resave: false
-    }
-));
+
+app.use(expressSession({
+  secret: 'myAppSecret',
+  saveUninitialized: false,
+  resave: false
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);
+//app.use(restrict);
 app.use('/orders', orders);
 
 // catch 404 and forward to error handler
