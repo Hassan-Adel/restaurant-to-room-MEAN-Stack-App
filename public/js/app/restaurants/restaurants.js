@@ -5,20 +5,14 @@
     .module('app')
     .controller('RestaurantsController', RestaurantsController);
     
-    RestaurantsController.$inject = ['$http'];
+    RestaurantsController.$inject = ['api'];
     
-    function RestaurantsController($http) {
+    function RestaurantsController(api) {
       var vm = this;
       
-      $http.get('/orders/api/restaurants')
-        .then(function(response) {
-          vm.restaurants = response.data
-        },
-        function(reason) {
-          console.log(reason);
-        })
-        .catch(function(err) {
-          console.log(err);
+      api.getRestaurants()
+        .then(function(data) {
+          vm.restaurants = data;
         });
     }
 }());
