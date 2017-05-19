@@ -1,7 +1,7 @@
 var config={};
 
 //rtr : database called restaurant to room
-config.mongoUri = 'mongodb://localhost:27017/rtr';
+config.mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/rtr';
 //30 days
 config.cookieMaxAge = 30 * 24 * 3600 * 1000;
 config.ordrxKey = 'J3hHrYriiJQ7akUgsmJZGO591e8Gvl-MSwsFwdtpDnA';
