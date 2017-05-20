@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start": "node server/app.js",
+    "postinstall": "bower install && ./bin/www staging",
     "start": "node ./bin/www"
   },
   "engines": {
